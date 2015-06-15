@@ -5,7 +5,7 @@ class Aadhar::UsersController < Aadhar::ApplicationController
     @user.set_temporary_password
     @user.change_password = true
     if @user.save
-      UserMailer.signup_email(@user, @user.temp_password).deliver_later
+      UserMailer.signup_email(@user, @user.temp_password).deliver
       render :status => 200,
            :json => { :success => true,
                       :info => "Registered",
