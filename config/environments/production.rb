@@ -91,3 +91,4 @@ Rails.application.configure do
       :enable_starttls_auto => true
       #:openssl_verify_mode  => 'none'
   }
+end
