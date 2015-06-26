@@ -7,19 +7,25 @@ class Aadhar::PasswordsController < Aadhar::ApplicationController
     current_user.change_password = false
     if current_user.save
       render :status => 200,
-           :json => { :success => true,
-                      :info => "Password updated successfully",
-                      :data => { :user => 
-                        {
-                          id: current_user.id,
-                          email: current_user.email,
-                          name: current_user.name
-                        } }   
+           :json => {
+                      :boss_response => 
+                          { :success => true,
+                                  :info => "Password updated successfully",
+                                  :data => { :user => 
+                                    {
+                                      id: current_user.id,
+                                      email: current_user.email,
+                                      name: current_user.name
+                                    } }   
+                                }
                     }
     else
       render :status => 200,
-             :json => { :success => false,
-                        :info => current_user.errors.full_messages}
+             :json => {
+                        :boss_response => 
+                           { :success => false,
+                                      :info => current_user.errors.full_messages}
+                        }
     end
   end
 
@@ -32,18 +38,23 @@ class Aadhar::PasswordsController < Aadhar::ApplicationController
       #ResetEmailJob.set(wait: 20.seconds).perform_later(@user, @user.temp_password)
       UserMailer.reset_email(@user, @user.temp_password).deliver_later
       render :status => 200,
-           :json => { :success => true,
-                      :info => "Check your email",
-                      :data => { :user => {
-                        id: @user.id,
-                        email: @user.email,
-                        name: @user.name
-                      } } 
-                    }
+           :json => {
+                      :boss_response => 
+                         { :success => true,
+                                    :info => "Check your email",
+                                    :data => { :user => {
+                                      id: @user.id,
+                                      email: @user.email,
+                                      name: @user.name
+                                    } } 
+                                  }
+                  }
     else
       render :status => 200,
-           :json => { :success => false,
-                      :info => "No user exist with this email address" }
+           :json => {
+                      :boss_response => {
+                       :info => "No user exist with this email address" }
+                    }
     end
   end
 end

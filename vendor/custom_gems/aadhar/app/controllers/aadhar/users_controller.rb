@@ -7,18 +7,24 @@ class Aadhar::UsersController < Aadhar::ApplicationController
     if @user.save
       UserMailer.signup_email(@user, @user.temp_password).deliver
       render :status => 200,
-           :json => { :success => true,
-                      :info => "Registered",
-                      :data => { 
-                        :user => {
-                          id: @user.id,
-                          email: @user.email,
-                          name: @user.name
-                          } } }
+           :json => {
+                      :boss_response => 
+                         { :success => true,
+                                    :info => "Registered",
+                                    :data => { 
+                                      :user => {
+                                        id: @user.id,
+                                        email: @user.email,
+                                        name: @user.name
+                                        } } }
+                        }
     else
       render :status => 200,
-             :json => { :success => false,
-                        :info => @user.errors.full_messages }
+             :json => {
+                      :boss_response => 
+                         { :success => false,
+                                    :info => @user.errors.full_messages }
+                      }
     end
   end
 
